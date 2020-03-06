@@ -16,7 +16,7 @@ INPUT_IMAGE =  'arroz.bmp'
 
 # TODO: ajuste estes parâmetros!
 NEGATIVO = False
-THRESHOLD = 0.4
+THRESHOLD = 0.8
 ALTURA_MIN = 1
 LARGURA_MIN = 1
 N_PIXELS_MIN = 1
@@ -31,10 +31,7 @@ Parâmetros: img: imagem de entrada. Se tiver mais que 1 canal, binariza cada
             threshold: limiar.
             
 Valor de retorno: versão binarizada da img_in.'''
-
-    # TODO: escreva o código desta função.
-    # Dica/desafio: usando a função np.where, dá para fazer a binarização muito
-    # rapidamente, e com apenas uma linha de código!
+    return np.where( img < threshold, 0.0, 1.0)
 
 #-------------------------------------------------------------------------------
 
@@ -54,7 +51,7 @@ com os seguintes campos:
 'n_pixels': número de pixels do componente.
 'T', 'L', 'B', 'R': coordenadas do retângulo envolvente de um componente conexo,
 respectivamente: topo, esquerda, baixo e direita.'''
-
+    return []
     # TODO: escreva esta função.
     # Use a abordagem com flood fill recursivo.
 
