@@ -12,14 +12,14 @@ import cv2
 
 #===============================================================================
 
-INPUT_IMAGE =  'arroz.bmp'
+INPUT_IMAGE =  '82.bmp'
 
 # TODO: ajuste estes parâmetros!
 NEGATIVO = False
 THRESHOLD = 0.8
-ALTURA_MIN = 10
-LARGURA_MIN = 10
-N_PIXELS_MIN = 400
+ALTURA_MIN = 1
+LARGURA_MIN = 1
+N_PIXELS_MIN = 1
 
 #===============================================================================
 
