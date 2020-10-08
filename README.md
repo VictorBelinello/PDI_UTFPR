@@ -11,4 +11,9 @@
 ## Trabalho 4 :
 - Data: 03/09
 - Implementação de algoritmo para contagem de grãos de arroz em imagem
-
+## Trabalho 5 :
+- Data: 17/09
+- Implementação de algoritmo para chroma key
+## Trabalho 6 :
+- Data: 21/10
+- Implementação de FFT 
