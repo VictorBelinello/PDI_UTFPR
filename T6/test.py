@@ -11,16 +11,19 @@ def fft1d_test(n):
     start = time.time()
     res1 = cooley_tukey_1d(x)
     end = time.time() - start
+    end1 = end
     print(f"My FFT Time: {end}, ",end=' ')
 
     start = time.time()
     res2 = np.fft.fft(x)
     end = time.time() - start
     print(f"Numpy time: {end}")
+    print(f"Relative time: {end1/end}")
 
     close = np.allclose(res1, res2)
     if not close:
         print("Wrong answer")
+        exit()
     else:
         print("OK")
 
@@ -72,8 +75,15 @@ def timeit(func, arg):
     func(arg)
     return time.time_ns() - start
 
+def stress_test():
+    sizes = [2**i for i in range(1,21)]
+    for n in sizes:
+        fft1d_test(n)
+
+
 def plot_comparison():
-    sizes = [i**2 for i in range(1,11)]
+    sizes = [2**i for i in range(1,21)]
+    print(sizes)
     np_times = []
     dft_times = []
     fft_times = []
@@ -81,19 +91,21 @@ def plot_comparison():
     for n in sizes:
         x = np.random.randint(100,size=(n))
         np_time = timeit(np.fft.fft, x)
-        dft_time = timeit(dft, x)
+        #dft_time = timeit(dft, x)
         fft_time = timeit(cooley_tukey_1d, x)
         np_times.append(np_time)
-        dft_times.append(dft_time)
+        #dft_times.append(dft_time)
         fft_times.append(fft_time)
 
     plt.plot(sizes, np_times)
-    plt.plot(sizes, dft_times)
     plt.plot(sizes, fft_times)
-    plt.legend( ['Numpy', 'DFT', 'FFT'] )
+    #plt.plot(sizes, dft_times)
+    #plt.legend( ['Numpy', 'FFT'] )
+    plt.legend( ['Numpy'] )
     plt.xlabel("Size of input")
     plt.ylabel("Run time (ns)")
     plt.show()
 
 if __name__ == "__main__":
-    plot_comparison()
+    stress_test()
+    #plot_comparison()

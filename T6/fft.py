@@ -6,8 +6,8 @@ def cooley_tukey_1d(x):
     if N <= 1:
         return x
 
-    x_even = cooley_tuley_1d( x[0:N:2] )
-    x_odd = cooley_tuley_1d( x[1:N:2] )
+    x_even = cooley_tukey_1d( x[0:N:2] )
+    x_odd = cooley_tukey_1d( x[1:N:2] )
 
     temp = [0]*N
     #temp = np.empty(N, dtype=np.complex)
