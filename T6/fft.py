@@ -1,5 +1,30 @@
 import numpy as np
 
+def roll_rows(x, amnt):
+  h = x.shape[0]
+  amnt = amnt%h
+  a = np.copy(x)
+  for i in range(amnt):
+    a = np.concatenate((a[-1:], a[:-1]))
+  return a
+
+def roll_cols(x, amnt):
+  c = x.shape[1]
+  amnt = amnt%c
+  a = np.copy(x)
+  for i in range(amnt):
+    for idx, row in enumerate(a):
+      a[idx] = np.concatenate((row[-1:],row[:-1]))
+  return a
+
+def shift(x):
+  height = x.shape[0]//2 
+  width = x.shape[1]//2 
+  a = roll_rows(x, height)
+  a = roll_cols(a, width)
+  return a
+  
+
 def ifft_2d(x):
   # Troca real e imaginario
   for i in range(x.shape[0]):
@@ -52,3 +77,15 @@ def cooley_tukey_1d(x):
     temp[k + half] = x_even[k] - x_odd[k] * w
 
   return temp
+
+def test():
+  n = 3
+  x = np.empty(shape=(n,n))
+  for i in range(n):
+    x[i] = np.random.randint(100,size=(n))
+  r = shift(x)
+  #print(r)
+
+
+if __name__ == "__main__":
+    test()

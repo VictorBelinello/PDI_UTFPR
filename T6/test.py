@@ -2,7 +2,7 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-from fft import cooley_tukey_1d, cooley_tukey_2d, ifft_2d
+from fft import cooley_tukey_1d, cooley_tukey_2d, ifft_2d, shift
 from dft import dft
 
 def fft2d_test(n):
@@ -142,8 +142,26 @@ def plot_comparison():
     plt.ylabel("Run time (ns)")
     plt.show()
 
+def test_shift(n):
+    x = np.empty(shape=(n,n))
+    for i in range(n):
+        x[i] = np.random.randint(100,size=(n))
+    np_shift = np.fft.fftshift(x)
+    my_shift = shift(x)
+    comp = np_shift == my_shift
+    if comp.all():
+        print(f"Shift {n} OK")
+    else:
+        print("Wrong shift of :\n",x)
+        exit()
+
+def stress_test_shift():
+    n = [i for i in range(2, 1024)]
+    for v in n:
+        test_shift(v)
+
 if __name__ == "__main__":
     #stress_test()
     #fft2d_test(2)
-    stress_test_2d()
+    stress_test_shift()
     #plot_comparison()
