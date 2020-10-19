@@ -55,7 +55,17 @@ def cooley_tukey_2d(x):
   return _fft
 
 
-
+"""
+DFT é dada por:
+X[k] = soma( x[k]*exp(-2*pi*1j*n*k/N), 0 < n < N - 1 )
+Pode ser reescrita como:
+X[k] =  soma (x[k]*exp(-2*pi*1j*(2m)*k)/N), 0 < m < N/2 - 1  ) +
+        soma (x[k]*exp(-2*pi*1j*(2m + 1)*k)/N), 0 < m < N/2 - 1  )
+Colocando em evidencia o termo exp(-2*pi*1j*k/N) no segundo somatorio:
+X[k] = E[k] + exp(-2*pi*1j*k/N)*O[k]
+Usando a periodicidade da exponencial complexa:
+X[k + N/2] = E[k] - exp(-2*pi*1j*k/N)*O[k]
+"""
 def cooley_tukey_1d(x):
   N = len(x)
   half = int(N/2)
@@ -66,26 +76,10 @@ def cooley_tukey_1d(x):
   x_odd = cooley_tukey_1d( x[1:N:2] )
 
   temp = [0]*N
-  #temp = np.empty(N, dtype=np.complex)
 
-  # Eh possivel calcular o ponto k e k+half da fft ao mesmo tempo
-  # Apenas trocando o sinal na conta
-  # Assim so precisamos percorrer metade do vetor final
   for k in range(half):
     w = np.exp(-2*np.pi*1j*k/N)
     temp[k] = x_even[k] + x_odd[k] * w
     temp[k + half] = x_even[k] - x_odd[k] * w
 
   return temp
-
-def test():
-  n = 3
-  x = np.empty(shape=(n,n))
-  for i in range(n):
-    x[i] = np.random.randint(100,size=(n))
-  r = shift(x)
-  #print(r)
-
-
-if __name__ == "__main__":
-    test()
