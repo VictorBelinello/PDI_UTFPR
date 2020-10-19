@@ -27,9 +27,16 @@ def blur(image):
   
   # Pega magnitudes
   fft_abs = np.abs(fft_shift)
-  
+  # Pega fases
+  fft_phase = np.angle(fft_shift)
+
   # Aplica filtro ponto a ponto
-  filtered = np.multiply(fft_shift, gaussian_kernel)
+  filtered_mags = np.multiply(fft_abs, gaussian_kernel)
+
+  # Reconstroi parte real e imaginaria (da FFT) usando mag e fase
+  filtered_real = filtered_mags*np.cos(fft_phase)
+  filtered_imag = filtered_mags*np.sin(fft_phase)
+  filtered = filtered_real + 1j*filtered_imag
 
   # Reconstroi imagem
   img_back = ifft_2d(np.fft.ifftshift(filtered))
@@ -48,7 +55,7 @@ def main():
       exit()
   # Realiza o padding para que o tamanho seja uma potencia de 2
   image = padImage(img)
-  # Borra imagem usando a fft
+  # Borra imagem filtrando no dominio da frequencia
   fft_blur = blur(image)
   cv2.imshow ('fft_blur', fft_blur)
   cv2.waitKey ()
